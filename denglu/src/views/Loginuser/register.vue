@@ -2,12 +2,36 @@
     <div>
         <p class="first"><router-link to="/login" tag="span" class="zuo">&lt;</router-link>圈子注册</p>
         <div class="second">
-            <input  type="text" placeholder="用户名"/>
-            <input  type="text" placeholder="密码"/>
+            <input  type="text" placeholder="用户名" v-model="userName"/>
+            <input  type="password" placeholder="密码" v-model="userPwd"/>
         </div>
-        <button class="denglu">注册</button>
+        <button class="denglu" @click="register">注册</button>
     </div>
 </template>
+<script>
+import {register} from '@/service/index'
+export default {
+    data(){
+        return{
+            userName:"",
+            userPwd:""
+        }
+    },
+
+    methods:{
+        async register(){
+            let {userName,userPwd}=this;
+            let result= await register({userName,userPwd})
+             console.log('result...', result);
+            if(result&&result.data.code===0){
+                alert(result.data.msg)
+            }else{
+                window.history.back();
+            }
+        }
+    }
+}
+</script>
 <style>
 .zuo{
     float: left;

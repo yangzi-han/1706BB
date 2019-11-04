@@ -2,13 +2,35 @@
     <div>
         <p class="first">圈子登录</p>
         <div class="second">
-            <input  type="text" placeholder="用户名"/>
-            <input  type="text" placeholder="登入密码"/>
+            <input  type="text" placeholder="用户名" v-model="userName"/>
+            <input  type="password" placeholder="登入密码" v-model="userPwd"/>
         </div>
-        <button class="denglu">登入</button>
+        <button class="denglu" @click="login">登入</button>
         <p class="footer"><router-link  to="/register">没有账号,快速登入</router-link></p>
     </div>
 </template>
+<script>
+import {login} from '@/service/index'
+export default {
+    data(){
+        return{
+            userName:"",
+            userPwd:""
+        }
+    },
+    methods:{
+        async login(){
+            let {userName,userPwd}=this;
+            let result= await login({userName,userPwd})
+            console.log(result)
+            if(result&&result.data.code===1){
+            this.$router.push({ path:'/home/timeline'})
+            }
+            alert(result.data.msg)
+        }
+    }
+}
+</script>
 <style>
     .first{
         font-size: 20px;
