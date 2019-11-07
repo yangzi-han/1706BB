@@ -1,0 +1,23 @@
+import {showDynamic} from '../../service/index'
+const state={
+        list:[]
+}
+const mutations={
+        updataList(state,payload){
+            state.list=payload
+        }
+}
+const actions={
+    async getTimeline(context,payload){
+        let data= await showDynamic();
+        context.commit('updataList',data.data.data)
+        console.log(data.data.data)
+    }
+
+}
+
+export default{
+    state,
+    mutations,
+    actions
+}
