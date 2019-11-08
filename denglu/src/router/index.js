@@ -7,6 +7,7 @@ import Timeline from '../views/home/timeline'
 import My from '../views/home/my'
 import Login from '../views/Loginuser/Login'
 import Register from '../views/Loginuser/register'
+import Post from '../views/post.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -64,6 +65,10 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path:"/post",
+    component:Post
   }
 ]
 
@@ -72,5 +77,18 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+//导航守卫
+const whiteList=['/login','/register']
+router.beforeEach((to,from,next)=>{
+  let isLogin= window.sessionStorage.getItem("isLogin")
+  if(!isLogin){
+    if(whiteList.indexOf(to.path)===-1){
+      next('/login');
+    }else{
+      next();
+    }
+  }else{
+    next();
+  }
+})
 export default router

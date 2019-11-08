@@ -24,7 +24,8 @@ export default {
             let result= await login({userName,userPwd})
             console.log(result)
             if(result&&result.data.code===1){
-            this.$router.push({ path:'/home/timeline'})
+                window.sessionStorage.setItem('isLogin',"true");
+            this.$router.replace('/')
             }
             alert(result.data.msg)
         }
@@ -44,7 +45,7 @@ export default {
         margin-top: 30px;
         width: 100%;
         height: 100px;
-
+        font-size: .4rem;
     }
     input{
         width: 93%;
